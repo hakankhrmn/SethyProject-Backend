@@ -59,4 +59,9 @@ public class AuthController {
     public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) throws Exception {
         return ResponseEntity.ok(userService.save(userDto));
     }
+
+    @GetMapping(value = "/isTokenValid")
+    public ResponseEntity<?> isTokenValid(String token){
+        return ResponseEntity.ok(jwtTokenManager.tokenValidate(token));
+    }
 }

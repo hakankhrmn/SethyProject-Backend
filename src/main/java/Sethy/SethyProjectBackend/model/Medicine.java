@@ -26,8 +26,8 @@ public class Medicine {
     @Column(name = "medicine_expire_date")
     private String medicineExpireDate;
 
-    @Column(name = "medicine_Number")
-    private int medicineNum;
+    @Column(name = "medicine_Description")
+    private String medicineDescription;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "pharmacyMedicines")
     private List<Pharmacy> medicinePharmacies;
