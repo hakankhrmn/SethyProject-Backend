@@ -43,6 +43,7 @@ public class MedicineServiceImpl implements MedicineService {
         Medicine newMedicine = new Medicine();
         newMedicine.setMedicineName(medicineDto.getMedicineName());
         newMedicine.setMedicineExpireDate(medicineDto.getMedicineExpireDate());
+        newMedicine.setMedicineNum(medicineDto.getMedicineNum());
         return modelMapper.map(medicineRepository.save(newMedicine),MedicineDto.class);
     }
 
