@@ -61,7 +61,7 @@ public class AuthController {
     }
 
     @GetMapping(value = "/isTokenValid")
-    public ResponseEntity<?> isTokenValid(String token){
+    public ResponseEntity<?> isTokenValid(@RequestParam String token){
         return ResponseEntity.ok(jwtTokenManager.tokenValidate(token));
     }
 }
