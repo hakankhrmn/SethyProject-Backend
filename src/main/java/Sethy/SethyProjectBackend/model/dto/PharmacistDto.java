@@ -25,4 +25,6 @@ public class PharmacistDto {
 
     private double locationLongitude;
 
+    private String pharmacyPhone;
+
 }

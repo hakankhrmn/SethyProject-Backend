@@ -22,6 +22,9 @@ public class Pharmacy {
     @Column(name = "pharmacy_name")
     private String pharmacyName;
 
+    @Column(name = "pharmacy_phone")
+    private String pharmacyPhone;
+
     @Column(name="location_latitude")
     private double locationLatitude;
 

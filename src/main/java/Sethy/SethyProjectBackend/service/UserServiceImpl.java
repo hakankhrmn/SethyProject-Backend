@@ -2,9 +2,12 @@ package Sethy.SethyProjectBackend.service;
 
 import Sethy.SethyProjectBackend.exception.NotFoundException;
 import Sethy.SethyProjectBackend.model.Pharmacist;
+import Sethy.SethyProjectBackend.model.Pharmacy;
 import Sethy.SethyProjectBackend.model.Role;
 import Sethy.SethyProjectBackend.model.User;
 import Sethy.SethyProjectBackend.model.dto.PharmacistDto;
+import Sethy.SethyProjectBackend.repository.PharmacistRepository;
+import Sethy.SethyProjectBackend.repository.PharmacyRepository;
 import Sethy.SethyProjectBackend.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +26,18 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PharmacyRepository pharmacyRepository;
+    private final PharmacistRepository pharmacistRepository;
     private final PasswordEncoder bcryptEncoder;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bcryptEncoder, RoleService roleService, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, PharmacyRepository pharmacyRepository, PharmacistRepository pharmacistRepository, PasswordEncoder bcryptEncoder, RoleService roleService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
+        this.pharmacyRepository = pharmacyRepository;
+        this.pharmacistRepository = pharmacistRepository;
         this.bcryptEncoder = bcryptEncoder;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
@@ -66,9 +73,20 @@ public class UserServiceImpl implements UserService {
         newUser.setUserMail(pharmacistDto.getUserMail());
         newUser.setUserPassword(bcryptEncoder.encode(pharmacistDto.getUserPassword()));
         newUser.setUserRoles(roles);
+
+
+        Pharmacy newPharmacy = new Pharmacy();
+        newPharmacy.setLocationLatitude(pharmacistDto.getLocationLatitude());
+        newPharmacy.setLocationLongitude(pharmacistDto.getLocationLongitude());
+        newPharmacy.setPharmacyName(pharmacistDto.getPharmacyName());
+        newPharmacy.setPharmacyPhone(pharmacistDto.getPharmacyPhone());
+        pharmacyRepository.save(newPharmacy);
+
         Pharmacist newPharmacist = new Pharmacist();
         newPharmacist.setUser(newUser);
+        newPharmacist.setPharmacy(pharmacyRepository.getByLocationLatitudeAndLocationLongitude(pharmacistDto.getLocationLatitude(), pharmacistDto.getLocationLongitude()));
 
+        pharmacistRepository.save(newPharmacist);
         userRepository.save(newUser);
 
 

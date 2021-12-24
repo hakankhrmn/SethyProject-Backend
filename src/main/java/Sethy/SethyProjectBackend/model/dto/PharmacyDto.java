@@ -13,6 +13,8 @@ public class PharmacyDto {
 
     private String pharmacyName;
 
+    private String pharmacyPhone;
+
     private double locationLatitude;
 
     private double locationLongitude;
