@@ -22,13 +22,11 @@ public class Pharmacy {
     @Column(name = "pharmacy_name")
     private String pharmacyName;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "pharmacy_location",
-            joinColumns = @JoinColumn(name = "pharmacy_id"),
-            inverseJoinColumns = @JoinColumn(name = "location_id")
-    )
-    private Location pharmacyLocation;
+    @Column(name="location_latitude")
+    private double locationLatitude;
+
+    @Column(name="location_longitude")
+    private double locationLongitude;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(

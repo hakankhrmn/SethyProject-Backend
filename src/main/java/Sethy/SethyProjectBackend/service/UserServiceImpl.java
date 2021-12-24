@@ -1,9 +1,10 @@
 package Sethy.SethyProjectBackend.service;
 
 import Sethy.SethyProjectBackend.exception.NotFoundException;
+import Sethy.SethyProjectBackend.model.Pharmacist;
 import Sethy.SethyProjectBackend.model.Role;
 import Sethy.SethyProjectBackend.model.User;
-import Sethy.SethyProjectBackend.model.dto.UserDto;
+import Sethy.SethyProjectBackend.model.dto.PharmacistDto;
 import Sethy.SethyProjectBackend.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,19 +54,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto save(UserDto userDto) {
+    public PharmacistDto save(PharmacistDto pharmacistDto) {
 
         Role adminUser = roleService.getByRoleName("ADMIN_USER");
-        Role endUser = roleService.getByRoleName("END_USER");
+        Role pharmacistUser = roleService.getByRoleName("PHARMACIST_USER");
         Set<Role> roles = new HashSet<>();
-        roles.add(endUser);
+        roles.add(pharmacistUser);
         User newUser = new User();
-        newUser.setUserName(userDto.getUserName());
-        newUser.setUserSurname(userDto.getUserSurname());
-        newUser.setUserMail(userDto.getUserMail());
-        newUser.setUserPassword(bcryptEncoder.encode(userDto.getUserPassword()));
+        newUser.setUserName(pharmacistDto.getUserName());
+        newUser.setUserSurname(pharmacistDto.getUserSurname());
+        newUser.setUserMail(pharmacistDto.getUserMail());
+        newUser.setUserPassword(bcryptEncoder.encode(pharmacistDto.getUserPassword()));
         newUser.setUserRoles(roles);
-        return modelMapper.map(userRepository.save(newUser),UserDto.class);
+        Pharmacist newPharmacist = new Pharmacist();
+        newPharmacist.setUser(newUser);
+
+        userRepository.save(newUser);
+
+
+
+        return pharmacistDto;
     }
 
     @Override

@@ -9,5 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PharmacyDto {
 
+    private int pharmacyId;
+
     private String pharmacyName;
+
+    private double locationLatitude;
+
+    private double locationLongitude;
 }

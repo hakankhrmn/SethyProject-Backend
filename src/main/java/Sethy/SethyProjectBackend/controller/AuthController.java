@@ -3,6 +3,7 @@ package Sethy.SethyProjectBackend.controller;
 import Sethy.SethyProjectBackend.config.JwtTokenManager;
 import Sethy.SethyProjectBackend.model.AuthenticationRequest;
 import Sethy.SethyProjectBackend.model.AuthenticationResponse;
+import Sethy.SethyProjectBackend.model.dto.PharmacistDto;
 import Sethy.SethyProjectBackend.model.dto.UserDto;
 import Sethy.SethyProjectBackend.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -56,8 +57,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) throws Exception {
-        return ResponseEntity.ok(userService.save(userDto));
+    public ResponseEntity<?> saveUser(@RequestBody PharmacistDto pharmacistDto) throws Exception {
+        return ResponseEntity.ok(userService.save(pharmacistDto));
     }
 
     @GetMapping(value = "/isTokenValid")
