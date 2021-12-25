@@ -9,5 +9,6 @@ public interface MedicineService {
     MedicineWithPharmacyDto getByMedicineId(int medicineId);
     MedicineDto createMedicine(MedicineDto medicineDto);
     List<MedicineWithPharmacyDto> getAllMedicines();
+    void deleteMedicine(int medicineId);
 
 }

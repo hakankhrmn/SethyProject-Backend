@@ -54,5 +54,13 @@ public class MedicineServiceImpl implements MedicineService {
         return medicines.stream().map(medicine -> modelMapper.map(medicine,MedicineWithPharmacyDto.class)).collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteMedicine(int medicineId) {
+        if (medicineRepository.findById(medicineId).isEmpty()){
+            throw new NotFoundException("COULD NOT FOUND THE MEDICINE");
+        }
+        medicineRepository.deleteById(medicineId);
+    }
+
 
 }

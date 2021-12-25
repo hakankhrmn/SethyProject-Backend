@@ -3,6 +3,7 @@ package Sethy.SethyProjectBackend.controller;
 import Sethy.SethyProjectBackend.model.dto.MedicineDto;
 import Sethy.SethyProjectBackend.model.dto.MedicineWithPharmacyDto;
 import Sethy.SethyProjectBackend.service.MedicineService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ public class MedicinesController {
 
     private final MedicineService medicineService;
 
+    @Autowired
     public MedicinesController(MedicineService medicineService) {
         this.medicineService = medicineService;
     }
@@ -39,5 +41,16 @@ public class MedicinesController {
         } catch (Exception e) {
             return new ResponseEntity<>((MedicineDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/medicine/{medicineId}")
+    public ResponseEntity<HttpStatus> deleteMedicine(@PathVariable("medicineId") int medicineId){
+        try {
+            medicineService.deleteMedicine(medicineId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
