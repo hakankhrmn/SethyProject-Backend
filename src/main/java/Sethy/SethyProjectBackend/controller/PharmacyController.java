@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class PharmacyController {
@@ -29,6 +31,16 @@ public class PharmacyController {
             return new ResponseEntity<>(pharmacyDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>((PharmacyDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/pharmacies")
+    public ResponseEntity<List<PharmacyDto>> getAllPharmacies(){
+        try {
+            List<PharmacyDto> pharmacyDtos = pharmacyService.getAllPharmacies();
+            return new ResponseEntity<>(pharmacyDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<PharmacyDto>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

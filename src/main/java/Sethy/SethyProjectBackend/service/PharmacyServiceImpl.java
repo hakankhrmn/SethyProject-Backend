@@ -7,6 +7,9 @@ import Sethy.SethyProjectBackend.repository.PharmacyRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PharmacyServiceImpl implements PharmacyService {
 
@@ -25,5 +28,11 @@ public class PharmacyServiceImpl implements PharmacyService {
             throw new NotFoundException("COULD NOT FOUND THE PHARMACY");
         }
         return modelMapper.map(pharmacy, PharmacyDto.class);
+    }
+
+    @Override
+    public List<PharmacyDto> getAllPharmacies() {
+        List<Pharmacy> pharmacies = pharmacyRepository.findAll();
+        return pharmacies.stream().map(pharmacy -> modelMapper.map(pharmacy, PharmacyDto.class)).collect(Collectors.toList());
     }
 }
