@@ -4,6 +4,7 @@ import Sethy.SethyProjectBackend.exception.AlreadyExistsException;
 import Sethy.SethyProjectBackend.exception.NotFoundException;
 import Sethy.SethyProjectBackend.model.Medicine;
 import Sethy.SethyProjectBackend.model.dto.MedicineDto;
+import Sethy.SethyProjectBackend.model.dto.MedicineWithPharmacyDto;
 import Sethy.SethyProjectBackend.repository.MedicineRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,13 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public MedicineDto getByMedicineId(int medicineId) {
+    public MedicineWithPharmacyDto getByMedicineId(int medicineId) {
         Medicine medicine;
         if (medicineRepository.findById(medicineId).isEmpty()){
-            throw new NotFoundException("COULD NOT FOUND THE QUESTION");
+            throw new NotFoundException("COULD NOT FOUND THE MEDICINE");
         }
         medicine = medicineRepository.findById(medicineId).get();
-        return modelMapper.map(medicine,MedicineDto.class);
+        return modelMapper.map(medicine,MedicineWithPharmacyDto.class);
     }
 
     @Override
@@ -48,9 +49,9 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public List<MedicineDto> getAllMedicines() {
+    public List<MedicineWithPharmacyDto> getAllMedicines() {
         List<Medicine> medicines = medicineRepository.findAll();
-        return medicines.stream().map(medicine -> modelMapper.map(medicine,MedicineDto.class)).collect(Collectors.toList());
+        return medicines.stream().map(medicine -> modelMapper.map(medicine,MedicineWithPharmacyDto.class)).collect(Collectors.toList());
     }
 
 

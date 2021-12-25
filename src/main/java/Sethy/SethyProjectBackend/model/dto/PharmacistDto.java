@@ -11,20 +11,5 @@ public class PharmacistDto {
 
     private int pharmacistId;
 
-    private String userName;
-
-    private String userSurname;
-
-    private String userMail;
-
-    private String userPassword;
-
-    private String pharmacyName;
-
-    private double locationLatitude;
-
-    private double locationLongitude;
-
-    private String pharmacyPhone;
-
+    private PharmacyDto pharmacyDto;
 }

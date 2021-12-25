@@ -4,22 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PharmacyDto {
+public class PharmacistInputDto {
 
-    private int pharmacyId;
+    private int pharmacistId;
+
+    private String userName;
+
+    private String userSurname;
+
+    private String userMail;
+
+    private String userPassword;
 
     private String pharmacyName;
-
-    private String pharmacyPhone;
 
     private double locationLatitude;
 
     private double locationLongitude;
 
-    private List<MedicineDto> medicineDtos;
+    private String pharmacyPhone;
+
 }

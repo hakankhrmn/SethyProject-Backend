@@ -5,7 +5,7 @@ import Sethy.SethyProjectBackend.model.Pharmacist;
 import Sethy.SethyProjectBackend.model.Pharmacy;
 import Sethy.SethyProjectBackend.model.Role;
 import Sethy.SethyProjectBackend.model.User;
-import Sethy.SethyProjectBackend.model.dto.PharmacistDto;
+import Sethy.SethyProjectBackend.model.dto.PharmacistInputDto;
 import Sethy.SethyProjectBackend.repository.PharmacistRepository;
 import Sethy.SethyProjectBackend.repository.PharmacyRepository;
 import Sethy.SethyProjectBackend.repository.UserRepository;
@@ -61,37 +61,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PharmacistDto save(PharmacistDto pharmacistDto) {
+    public PharmacistInputDto save(PharmacistInputDto pharmacistInputDto) {
 
         Role adminUser = roleService.getByRoleName("ADMIN_USER");
         Role pharmacistUser = roleService.getByRoleName("PHARMACIST_USER");
         Set<Role> roles = new HashSet<>();
         roles.add(pharmacistUser);
         User newUser = new User();
-        newUser.setUserName(pharmacistDto.getUserName());
-        newUser.setUserSurname(pharmacistDto.getUserSurname());
-        newUser.setUserMail(pharmacistDto.getUserMail());
-        newUser.setUserPassword(bcryptEncoder.encode(pharmacistDto.getUserPassword()));
+        newUser.setUserName(pharmacistInputDto.getUserName());
+        newUser.setUserSurname(pharmacistInputDto.getUserSurname());
+        newUser.setUserMail(pharmacistInputDto.getUserMail());
+        newUser.setUserPassword(bcryptEncoder.encode(pharmacistInputDto.getUserPassword()));
         newUser.setUserRoles(roles);
 
 
         Pharmacy newPharmacy = new Pharmacy();
-        newPharmacy.setLocationLatitude(pharmacistDto.getLocationLatitude());
-        newPharmacy.setLocationLongitude(pharmacistDto.getLocationLongitude());
-        newPharmacy.setPharmacyName(pharmacistDto.getPharmacyName());
-        newPharmacy.setPharmacyPhone(pharmacistDto.getPharmacyPhone());
+        newPharmacy.setLocationLatitude(pharmacistInputDto.getLocationLatitude());
+        newPharmacy.setLocationLongitude(pharmacistInputDto.getLocationLongitude());
+        newPharmacy.setPharmacyName(pharmacistInputDto.getPharmacyName());
+        newPharmacy.setPharmacyPhone(pharmacistInputDto.getPharmacyPhone());
         pharmacyRepository.save(newPharmacy);
 
         Pharmacist newPharmacist = new Pharmacist();
         newPharmacist.setUser(newUser);
-        newPharmacist.setPharmacy(pharmacyRepository.getByLocationLatitudeAndLocationLongitude(pharmacistDto.getLocationLatitude(), pharmacistDto.getLocationLongitude()));
+        newPharmacist.setPharmacy(pharmacyRepository.getByLocationLatitudeAndLocationLongitude(pharmacistInputDto.getLocationLatitude(), pharmacistInputDto.getLocationLongitude()));
 
         pharmacistRepository.save(newPharmacist);
         userRepository.save(newUser);
 
 
 
-        return pharmacistDto;
+        return pharmacistInputDto;
     }
 
     @Override
@@ -112,7 +112,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserMail(String username) {
-        return userRepository.getUserByUserMail(username);
+        User user = userRepository.getUserByUserMail(username);
+        if(user==null){
+            throw new UsernameNotFoundException("Could not find user");
+        }
+        return user;
     }
 
     @Override
