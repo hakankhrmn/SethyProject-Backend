@@ -40,4 +40,14 @@ public class PharmacyServiceImpl implements PharmacyService {
     public void deleteAllPharmacies() {
         pharmacyRepository.deleteAll();
     }
+
+    @Override
+    public void deletePharmacy(int pharmacyId) {
+
+        if (pharmacyRepository.findById(pharmacyId).isEmpty()){
+            throw new NotFoundException("COULD NOT FOUND THE PHARMACY");
+        }
+        pharmacyRepository.deleteById(pharmacyId);
+
+    }
 }

@@ -8,4 +8,5 @@ public interface PharmacyService {
     PharmacyDto getByPharmacyId(int pharmacyId);
     List<PharmacyDto> getAllPharmacies();
     void deleteAllPharmacies();
+    void deletePharmacy(int pharmacyId);
 }
