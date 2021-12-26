@@ -7,4 +7,5 @@ import java.util.List;
 public interface PharmacyService {
     PharmacyDto getByPharmacyId(int pharmacyId);
     List<PharmacyDto> getAllPharmacies();
+    void deleteAllPharmacies();
 }

@@ -1,11 +1,12 @@
 package Sethy.SethyProjectBackend.service;
 
-import Sethy.SethyProjectBackend.exception.AlreadyExistsException;
 import Sethy.SethyProjectBackend.exception.NotFoundException;
 import Sethy.SethyProjectBackend.model.Medicine;
+import Sethy.SethyProjectBackend.model.Pharmacy;
 import Sethy.SethyProjectBackend.model.dto.MedicineDto;
 import Sethy.SethyProjectBackend.model.dto.MedicineWithPharmacyDto;
 import Sethy.SethyProjectBackend.repository.MedicineRepository;
+import Sethy.SethyProjectBackend.repository.PharmacyRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,13 @@ import java.util.stream.Collectors;
 public class MedicineServiceImpl implements MedicineService {
 
     private final MedicineRepository medicineRepository;
+    private final PharmacyRepository pharmacyRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public MedicineServiceImpl(MedicineRepository medicineRepository, ModelMapper modelMapper) {
+    public MedicineServiceImpl(MedicineRepository medicineRepository, PharmacyRepository pharmacyRepository, ModelMapper modelMapper) {
         this.medicineRepository = medicineRepository;
+        this.pharmacyRepository = pharmacyRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -36,16 +39,25 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public MedicineDto createMedicine(MedicineDto medicineDto) {
+    public MedicineDto createMedicine(int pharmacyId, MedicineDto medicineDto) {
         Medicine medicine =medicineRepository.getByMedicineName(medicineDto.getMedicineName());
+        Pharmacy pharmacy = pharmacyRepository.getByPharmacyId(pharmacyId);
         if (medicine!=null){
-            throw new AlreadyExistsException("MEDICINE ALREADY EXISTS");
+            List<Pharmacy> pharmacies = medicine.getMedicinePharmacies();
+            pharmacies.add(pharmacy);
+            medicine.setMedicinePharmacies(pharmacies);
+            return modelMapper.map(medicineRepository.save(medicine),MedicineDto.class);
+        }else{
+            Medicine newMedicine = new Medicine();
+            newMedicine.setMedicineName(medicineDto.getMedicineName());
+            newMedicine.setMedicineExpireDate(medicineDto.getMedicineExpireDate());
+            newMedicine.setMedicineDescription(medicineDto.getMedicineDescription());
+            List<Pharmacy> pharmacies = newMedicine.getMedicinePharmacies();
+            pharmacies.add(pharmacy);
+            newMedicine.setMedicinePharmacies(pharmacies);
+            return modelMapper.map(medicineRepository.save(newMedicine),MedicineDto.class);
         }
-        Medicine newMedicine = new Medicine();
-        newMedicine.setMedicineName(medicineDto.getMedicineName());
-        newMedicine.setMedicineExpireDate(medicineDto.getMedicineExpireDate());
-        newMedicine.setMedicineDescription(medicineDto.getMedicineDescription());
-        return modelMapper.map(medicineRepository.save(newMedicine),MedicineDto.class);
+
     }
 
     @Override
@@ -60,6 +72,11 @@ public class MedicineServiceImpl implements MedicineService {
             throw new NotFoundException("COULD NOT FOUND THE MEDICINE");
         }
         medicineRepository.deleteById(medicineId);
+    }
+
+    @Override
+    public void deleteAllMedicines() {
+        medicineRepository.deleteAll();
     }
 
 

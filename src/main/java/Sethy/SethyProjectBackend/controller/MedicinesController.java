@@ -33,10 +33,10 @@ public class MedicinesController {
         return new ResponseEntity<>(medicineWithPharmacyDto, HttpStatus.OK);
     }
 
-    @PostMapping("/medicine")
-    public ResponseEntity<MedicineDto> createMedicine(@RequestBody MedicineDto medicineDto){
+    @PostMapping("/medicine/{pharmacyId}")
+    public ResponseEntity<MedicineDto> createMedicine(@PathVariable("pharmacyId") int pharmacyId,@RequestBody MedicineDto medicineDto){
         try {
-            MedicineDto newMedicineDto = medicineService.createMedicine(medicineDto);
+            MedicineDto newMedicineDto = medicineService.createMedicine(pharmacyId,medicineDto);
             return new ResponseEntity<>(newMedicineDto,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>((MedicineDto) null, HttpStatus.INTERNAL_SERVER_ERROR);

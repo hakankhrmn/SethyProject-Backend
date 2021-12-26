@@ -28,4 +28,9 @@ public class PharmacistServiceImpl implements PharmacistService {
         }
         return modelMapper.map(pharmacist, PharmacistDto.class);
     }
+
+    @Override
+    public void deleteAllPharmacists() {
+        pharmacistRepository.deleteAll();
+    }
 }

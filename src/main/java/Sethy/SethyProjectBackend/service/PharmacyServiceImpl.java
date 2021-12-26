@@ -35,4 +35,9 @@ public class PharmacyServiceImpl implements PharmacyService {
         List<Pharmacy> pharmacies = pharmacyRepository.findAll();
         return pharmacies.stream().map(pharmacy -> modelMapper.map(pharmacy, PharmacyDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAllPharmacies() {
+        pharmacyRepository.deleteAll();
+    }
 }
