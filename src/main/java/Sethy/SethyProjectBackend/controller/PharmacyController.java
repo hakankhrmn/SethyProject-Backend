@@ -1,7 +1,6 @@
 package Sethy.SethyProjectBackend.controller;
 
 import Sethy.SethyProjectBackend.model.dto.PharmacyDto;
-import Sethy.SethyProjectBackend.model.dto.PharmacyWithId;
 import Sethy.SethyProjectBackend.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +20,10 @@ public class PharmacyController {
         this.pharmacyService = pharmacyService;
     }
 
-    @GetMapping("/pharmacy")
-    public ResponseEntity<PharmacyDto> getPharmacistById(@RequestBody PharmacyWithId pharmacyWithId){
+    @GetMapping("/pharmacy/{pharmacyId}")
+    public ResponseEntity<PharmacyDto> getPharmacistById(@PathVariable int pharmacyId){
         try {
-            PharmacyDto pharmacyDto = pharmacyService.getByPharmacyId(pharmacyWithId.getPharmacyId());
+            PharmacyDto pharmacyDto = pharmacyService.getByPharmacyId(pharmacyId);
             return new ResponseEntity<>(pharmacyDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>((PharmacyDto) null, HttpStatus.INTERNAL_SERVER_ERROR);

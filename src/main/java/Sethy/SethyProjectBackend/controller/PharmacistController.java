@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,7 +22,7 @@ public class PharmacistController {
     }
 
     @GetMapping("/pharmacist/{userMail}")
-    public ResponseEntity<PharmacistDto> getPharmacistByUser(@RequestParam String userMail){
+    public ResponseEntity<PharmacistDto> getPharmacistByUser(@PathVariable String userMail){
         try {
             PharmacistDto pharmacistDto = pharmacistService.getPharmacistByUser(userMail);
             return new ResponseEntity<>(pharmacistDto,HttpStatus.OK);
