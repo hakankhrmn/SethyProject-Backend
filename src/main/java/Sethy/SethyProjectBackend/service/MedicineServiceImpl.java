@@ -42,7 +42,7 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public MedicineDto createMedicine(int pharmacyId, MedicineDto medicineDto) {
         Medicine medicine =medicineRepository.getByMedicineName(medicineDto.getMedicineName());
-        Pharmacy pharmacy = pharmacyRepository.getByPharmacyId(pharmacyId);
+        Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId).get();
         if (medicine!=null){
             List<Pharmacy> pharmacies = medicine.getMedicinePharmacies();
             pharmacies.add(pharmacy);

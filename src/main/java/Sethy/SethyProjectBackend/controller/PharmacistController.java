@@ -22,7 +22,7 @@ public class PharmacistController {
     }
 
     @GetMapping("/pharmacist/{userMail}")
-    public ResponseEntity<PharmacistDto> getPharmacistByUser(@PathVariable String userMail){
+    public ResponseEntity<PharmacistDto> getPharmacistByUserMail(@PathVariable String userMail){
         try {
             PharmacistDto pharmacistDto = pharmacistService.getPharmacistByUser(userMail);
             return new ResponseEntity<>(pharmacistDto,HttpStatus.OK);

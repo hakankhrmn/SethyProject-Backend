@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService {
 
         Role adminUser = roleService.getByRoleName("ADMIN_USER");
         Role pharmacistUser = roleService.getByRoleName("PHARMACIST_USER");
+
         Set<Role> roles = new HashSet<>();
         roles.add(pharmacistUser);
         User newUser = new User();
