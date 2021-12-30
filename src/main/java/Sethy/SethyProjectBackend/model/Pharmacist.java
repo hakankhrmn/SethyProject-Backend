@@ -17,7 +17,7 @@ public class Pharmacist{
     @Column(name="pharmacist_id")
     private int pharmacistId;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "pharmacist_user",
             joinColumns = @JoinColumn(name = "pharmacist_id"),
@@ -25,6 +25,6 @@ public class Pharmacist{
     )
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pharmacyOwner")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pharmacyOwner")
     private Pharmacy pharmacy;
 }

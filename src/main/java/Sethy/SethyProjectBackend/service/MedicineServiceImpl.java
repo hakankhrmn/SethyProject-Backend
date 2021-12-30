@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,7 @@ public class MedicineServiceImpl implements MedicineService {
             newMedicine.setMedicineName(medicineDto.getMedicineName());
             newMedicine.setMedicineExpireDate(medicineDto.getMedicineExpireDate());
             newMedicine.setMedicineDescription(medicineDto.getMedicineDescription());
-            List<Pharmacy> pharmacies = newMedicine.getMedicinePharmacies();
+            List<Pharmacy> pharmacies = new ArrayList<Pharmacy>();
             pharmacies.add(pharmacy);
             newMedicine.setMedicinePharmacies(pharmacies);
             return modelMapper.map(medicineRepository.save(newMedicine),MedicineDto.class);

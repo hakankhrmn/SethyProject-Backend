@@ -11,5 +11,5 @@ public class PharmacistDto {
 
     private int pharmacistId;
 
-    private PharmacyDto pharmacyDto;
+    private PharmacyDto pharmacy;
 }

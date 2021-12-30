@@ -47,6 +47,6 @@ public class User
     )
     private Set<Role> userRoles;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Pharmacist pharmacist;
 }

@@ -31,7 +31,7 @@ public class Pharmacy {
     @Column(name="location_longitude")
     private double locationLongitude;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "pharmacy_pharmacist",
             joinColumns = @JoinColumn(name = "pharmacy_id"),
@@ -39,7 +39,7 @@ public class Pharmacy {
     )
     private Pharmacist pharmacyOwner;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "pharmacy_medicine",
             joinColumns = @JoinColumn(name = "pharmacy_id"),

@@ -23,10 +23,11 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     @Override
     public PharmacyDto getByPharmacyId(int pharmacyId) {
-        Pharmacy pharmacy = pharmacyRepository.getByPharmacyId(pharmacyId);
+        Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId).get();
         if (pharmacy == null){
             throw new NotFoundException("COULD NOT FOUND THE PHARMACY");
         }
+
         return modelMapper.map(pharmacy, PharmacyDto.class);
     }
 
