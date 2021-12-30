@@ -21,5 +21,5 @@ public class PharmacyDto {
 
     private double locationLongitude;
 
-    private List<MedicineDto> medicineDtos;
+    private List<MedicineDto> pharmacyMedicines;
 }

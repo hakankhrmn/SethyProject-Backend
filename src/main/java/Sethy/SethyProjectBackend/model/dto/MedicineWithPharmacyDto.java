@@ -19,6 +19,6 @@ public class MedicineWithPharmacyDto {
 
     private String medicineDescription;
 
-    private List<PharmacyDto> medicinePharmacyDtos;
+    private List<PharmacyDto> medicinePharmacies;
 
 }
