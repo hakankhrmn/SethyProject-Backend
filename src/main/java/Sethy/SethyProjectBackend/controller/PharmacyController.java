@@ -22,7 +22,7 @@ public class PharmacyController {
     }
 
     @GetMapping("/pharmacy")
-    public ResponseEntity<PharmacyDto> getPharmacistByUser(@RequestBody PharmacyWithId pharmacyWithId){
+    public ResponseEntity<PharmacyDto> getPharmacistById(@RequestBody PharmacyWithId pharmacyWithId){
         try {
             PharmacyDto pharmacyDto = pharmacyService.getByPharmacyId(pharmacyWithId.getPharmacyId());
             return new ResponseEntity<>(pharmacyDto, HttpStatus.OK);
