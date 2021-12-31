@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         newUser.setUserMail(pharmacistInputDto.getUserMail());
         newUser.setUserPassword(bcryptEncoder.encode(pharmacistInputDto.getUserPassword()));
         newUser.setUserRoles(roles);
-
+        userRepository.save(newUser);
 
         Pharmacy newPharmacy = new Pharmacy();
         newPharmacy.setLocationLatitude(pharmacistInputDto.getLocationLatitude());
@@ -84,11 +84,11 @@ public class UserServiceImpl implements UserService {
         pharmacyRepository.save(newPharmacy);
 
         Pharmacist newPharmacist = new Pharmacist();
-        newPharmacist.setUser(newUser);
+        newPharmacist.setUser(userRepository.getUserByUserMail(pharmacistInputDto.getUserMail()));
         newPharmacist.setPharmacy(pharmacyRepository.getByLocationLatitudeAndLocationLongitude(pharmacistInputDto.getLocationLatitude(), pharmacistInputDto.getLocationLongitude()));
 
         pharmacistRepository.save(newPharmacist);
-        userRepository.save(newUser);
+
 
 
 

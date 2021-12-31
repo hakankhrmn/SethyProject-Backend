@@ -4,7 +4,6 @@ import Sethy.SethyProjectBackend.exception.NotFoundException;
 import Sethy.SethyProjectBackend.model.Medicine;
 import Sethy.SethyProjectBackend.model.Pharmacy;
 import Sethy.SethyProjectBackend.model.dto.MedicineDto;
-import Sethy.SethyProjectBackend.model.dto.MedicineWithPharmacyDto;
 import Sethy.SethyProjectBackend.repository.MedicineRepository;
 import Sethy.SethyProjectBackend.repository.PharmacyRepository;
 import org.modelmapper.ModelMapper;
@@ -30,13 +29,13 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public MedicineWithPharmacyDto getByMedicineId(int medicineId) {
+    public MedicineDto getByMedicineId(int medicineId) {
         Medicine medicine;
         if (medicineRepository.findById(medicineId).isEmpty()){
             throw new NotFoundException("COULD NOT FOUND THE MEDICINE");
         }
         medicine = medicineRepository.findById(medicineId).get();
-        return modelMapper.map(medicine,MedicineWithPharmacyDto.class);
+        return modelMapper.map(medicine,MedicineDto.class);
     }
 
     @Override
@@ -62,9 +61,9 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public List<MedicineWithPharmacyDto> getAllMedicines() {
+    public List<MedicineDto> getAllMedicines() {
         List<Medicine> medicines = medicineRepository.findAll();
-        return medicines.stream().map(medicine -> modelMapper.map(medicine,MedicineWithPharmacyDto.class)).collect(Collectors.toList());
+        return medicines.stream().map(medicine -> modelMapper.map(medicine,MedicineDto.class)).collect(Collectors.toList());
     }
 
     @Override

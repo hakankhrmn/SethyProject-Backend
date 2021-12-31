@@ -39,6 +39,15 @@ public class PharmacyController {
             return new ResponseEntity<>((List<PharmacyDto>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/pharmacies/{medicineId}")
+    public ResponseEntity<List<PharmacyDto>> getMedicinePharmacies(@PathVariable int medicineId){
+        try {
+            List<PharmacyDto> pharmacyDtos = pharmacyService.getMedicinePharmacies(medicineId);
+            return new ResponseEntity<>(pharmacyDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>((List<PharmacyDto>) null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @DeleteMapping("/pharmacy/{pharmacyId}")
     public ResponseEntity<HttpStatus> deleteMedicine(@PathVariable("pharmacyId") int pharmacyId){

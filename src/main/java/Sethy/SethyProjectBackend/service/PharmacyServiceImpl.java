@@ -3,6 +3,7 @@ package Sethy.SethyProjectBackend.service;
 import Sethy.SethyProjectBackend.exception.NotFoundException;
 import Sethy.SethyProjectBackend.model.Pharmacy;
 import Sethy.SethyProjectBackend.model.dto.PharmacyDto;
+import Sethy.SethyProjectBackend.repository.MedicineRepository;
 import Sethy.SethyProjectBackend.repository.PharmacyRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ import java.util.stream.Collectors;
 public class PharmacyServiceImpl implements PharmacyService {
 
     private final PharmacyRepository pharmacyRepository;
+    private final MedicineRepository medicineRepository;
     private final ModelMapper modelMapper;
 
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, ModelMapper modelMapper) {
+    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, MedicineRepository medicineRepository, ModelMapper modelMapper) {
         this.pharmacyRepository = pharmacyRepository;
+        this.medicineRepository = medicineRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -34,6 +37,12 @@ public class PharmacyServiceImpl implements PharmacyService {
     @Override
     public List<PharmacyDto> getAllPharmacies() {
         List<Pharmacy> pharmacies = pharmacyRepository.findAll();
+        return pharmacies.stream().map(pharmacy -> modelMapper.map(pharmacy, PharmacyDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PharmacyDto> getMedicinePharmacies(int medicineId) {
+        List<Pharmacy> pharmacies = medicineRepository.findById(medicineId).get().getMedicinePharmacies();
         return pharmacies.stream().map(pharmacy -> modelMapper.map(pharmacy, PharmacyDto.class)).collect(Collectors.toList());
     }
 

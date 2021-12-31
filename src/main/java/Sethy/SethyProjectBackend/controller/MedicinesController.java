@@ -1,7 +1,6 @@
 package Sethy.SethyProjectBackend.controller;
 
 import Sethy.SethyProjectBackend.model.dto.MedicineDto;
-import Sethy.SethyProjectBackend.model.dto.MedicineWithPharmacyDto;
 import Sethy.SethyProjectBackend.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,15 +21,15 @@ public class MedicinesController {
     }
 
     @GetMapping("/medicine/{medicineId}")
-    public ResponseEntity<MedicineWithPharmacyDto> getByMedicineId(@PathVariable("medicineId") int medicineId){
-        MedicineWithPharmacyDto medicineWithPharmacyDto = medicineService.getByMedicineId(medicineId);
-        return new ResponseEntity<>(medicineWithPharmacyDto, HttpStatus.OK);
+    public ResponseEntity<MedicineDto> getByMedicineId(@PathVariable("medicineId") int medicineId){
+        MedicineDto medicineDto = medicineService.getByMedicineId(medicineId);
+        return new ResponseEntity<>(medicineDto, HttpStatus.OK);
     }
 
     @GetMapping("/medicines")
-    public ResponseEntity<List<MedicineWithPharmacyDto>> getAllMedicines(){
-        List<MedicineWithPharmacyDto> medicineWithPharmacyDto = medicineService.getAllMedicines();
-        return new ResponseEntity<>(medicineWithPharmacyDto, HttpStatus.OK);
+    public ResponseEntity<List<MedicineDto>> getAllMedicines(){
+        List<MedicineDto> medicineDto = medicineService.getAllMedicines();
+        return new ResponseEntity<>(medicineDto, HttpStatus.OK);
     }
 
     @PostMapping("/medicine/{pharmacyId}")
