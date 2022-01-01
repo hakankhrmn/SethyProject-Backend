@@ -6,6 +6,7 @@ import Sethy.SethyProjectBackend.model.Pharmacy;
 import Sethy.SethyProjectBackend.model.Role;
 import Sethy.SethyProjectBackend.model.User;
 import Sethy.SethyProjectBackend.model.dto.PharmacistInputDto;
+import Sethy.SethyProjectBackend.model.dto.UserWithPharmacistDto;
 import Sethy.SethyProjectBackend.repository.PharmacistRepository;
 import Sethy.SethyProjectBackend.repository.PharmacyRepository;
 import Sethy.SethyProjectBackend.repository.UserRepository;
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PharmacistInputDto save(PharmacistInputDto pharmacistInputDto) {
+    public UserWithPharmacistDto save(PharmacistInputDto pharmacistInputDto) {
 
         Role adminUser = roleService.getByRoleName("ADMIN_USER");
         Role pharmacistUser = roleService.getByRoleName("PHARMACIST_USER");
@@ -74,25 +75,27 @@ public class UserServiceImpl implements UserService {
         newUser.setUserMail(pharmacistInputDto.getUserMail());
         newUser.setUserPassword(bcryptEncoder.encode(pharmacistInputDto.getUserPassword()));
         newUser.setUserRoles(roles);
-        userRepository.save(newUser);
+        //userRepository.save(newUser);
 
         Pharmacy newPharmacy = new Pharmacy();
         newPharmacy.setLocationLatitude(pharmacistInputDto.getLocationLatitude());
         newPharmacy.setLocationLongitude(pharmacistInputDto.getLocationLongitude());
         newPharmacy.setPharmacyName(pharmacistInputDto.getPharmacyName());
         newPharmacy.setPharmacyPhone(pharmacistInputDto.getPharmacyPhone());
-        pharmacyRepository.save(newPharmacy);
+
+        //pharmacyRepository.save(newPharmacy);
 
         Pharmacist newPharmacist = new Pharmacist();
-        newPharmacist.setUser(userRepository.getUserByUserMail(pharmacistInputDto.getUserMail()));
-        newPharmacist.setPharmacy(pharmacyRepository.getByLocationLatitudeAndLocationLongitude(pharmacistInputDto.getLocationLatitude(), pharmacistInputDto.getLocationLongitude()));
+        newPharmacist.setUser(newUser);
+        newPharmacist.setPharmacy(newPharmacy);
 
-        pharmacistRepository.save(newPharmacist);
+        newUser.setPharmacist(newPharmacist);
+        newPharmacy.setPharmacyOwner(newPharmacist);
+        //pharmacistRepository.save(newPharmacist);
 
 
 
-
-        return pharmacistInputDto;
+        return modelMapper.map(userRepository.save(newUser), UserWithPharmacistDto.class);
     }
 
     @Override
