@@ -46,6 +46,11 @@ public class MedicineServiceImpl implements MedicineService {
             List<Pharmacy> pharmacies = medicine.getMedicinePharmacies();
             pharmacies.add(pharmacy);
             medicine.setMedicinePharmacies(pharmacies);
+
+            List<Medicine> medicines = pharmacy.getPharmacyMedicines();
+            medicines.add(medicine);
+            pharmacy.setPharmacyMedicines(medicines);
+
             return modelMapper.map(medicineRepository.save(medicine),MedicineDto.class);
         }else{
             Medicine newMedicine = new Medicine();
@@ -55,6 +60,10 @@ public class MedicineServiceImpl implements MedicineService {
             List<Pharmacy> pharmacies = new ArrayList<Pharmacy>();
             pharmacies.add(pharmacy);
             newMedicine.setMedicinePharmacies(pharmacies);
+
+            List<Medicine> medicines = pharmacy.getPharmacyMedicines();
+            medicines.add(newMedicine);
+            pharmacy.setPharmacyMedicines(medicines);
             return modelMapper.map(medicineRepository.save(newMedicine),MedicineDto.class);
         }
 
@@ -64,6 +73,12 @@ public class MedicineServiceImpl implements MedicineService {
     public List<MedicineDto> getAllMedicines() {
         List<Medicine> medicines = medicineRepository.findAll();
         return medicines.stream().map(medicine -> modelMapper.map(medicine,MedicineDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MedicineDto> getPharmacyMedicine(int pharmacyId) {
+        List<Medicine> medicines = pharmacyRepository.findById(pharmacyId).get().getPharmacyMedicines();
+        return medicines.stream().map(medicine -> modelMapper.map(medicine, MedicineDto.class)).collect(Collectors.toList());
     }
 
     @Override

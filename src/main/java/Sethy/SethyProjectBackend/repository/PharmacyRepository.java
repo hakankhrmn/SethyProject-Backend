@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PharmacyRepository extends JpaRepository<Pharmacy,Integer> {
     Pharmacy getByLocationLatitudeAndLocationLongitude(double locationLatitude, double locationLongitude);
-    Pharmacy getByPharmacyId(int pharmacyId);
 }
