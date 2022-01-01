@@ -2,7 +2,7 @@ package Sethy.SethyProjectBackend.controller;
 
 import Sethy.SethyProjectBackend.model.dto.MedicineDto;
 import Sethy.SethyProjectBackend.service.MedicineService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,14 @@ import java.util.List;
 
 @RestController("/medicines")
 @CrossOrigin
-@AllArgsConstructor
 public class MedicinesController {
 
     private final MedicineService medicineService;
+
+    @Autowired
+    public MedicinesController(MedicineService medicineService) {
+        this.medicineService = medicineService;
+    }
 
     @GetMapping("/{medicineId}")
     public ResponseEntity<MedicineDto> getByMedicineId(@PathVariable("medicineId") int medicineId){

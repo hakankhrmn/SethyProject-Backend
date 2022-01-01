@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("/pharmacies")
 @CrossOrigin
 public class PharmacyController {
 
@@ -20,7 +20,7 @@ public class PharmacyController {
         this.pharmacyService = pharmacyService;
     }
 
-    @GetMapping("/pharmacy/{pharmacyId}")
+    @GetMapping("/{pharmacyId}")
     public ResponseEntity<PharmacyDto> getPharmacistById(@PathVariable int pharmacyId){
         try {
             PharmacyDto pharmacyDto = pharmacyService.getByPharmacyId(pharmacyId);
@@ -30,7 +30,7 @@ public class PharmacyController {
         }
     }
 
-    @GetMapping("/pharmacies")
+    @GetMapping
     public ResponseEntity<List<PharmacyDto>> getAllPharmacies(){
         try {
             List<PharmacyDto> pharmacyDtos = pharmacyService.getAllPharmacies();
@@ -39,7 +39,7 @@ public class PharmacyController {
             return new ResponseEntity<>((List<PharmacyDto>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/pharmacies/{medicineId}")
+    @GetMapping("/medicine/{medicineId}")
     public ResponseEntity<List<PharmacyDto>> getMedicinePharmacies(@PathVariable int medicineId){
         try {
             List<PharmacyDto> pharmacyDtos = pharmacyService.getMedicinePharmacies(medicineId);
@@ -49,7 +49,7 @@ public class PharmacyController {
         }
     }
 
-    @DeleteMapping("/pharmacy/{pharmacyId}")
+    @DeleteMapping("/{pharmacyId}")
     public ResponseEntity<HttpStatus> deleteMedicine(@PathVariable("pharmacyId") int pharmacyId){
         try {
             pharmacyService.deletePharmacy(pharmacyId);
