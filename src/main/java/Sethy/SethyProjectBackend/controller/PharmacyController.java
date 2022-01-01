@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/pharmacies")
+@RestController
 @CrossOrigin
+@RequestMapping("/pharmacies")
 public class PharmacyController {
 
     private final PharmacyService pharmacyService;
@@ -30,7 +31,7 @@ public class PharmacyController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<PharmacyDto>> getAllPharmacies(){
         try {
             List<PharmacyDto> pharmacyDtos = pharmacyService.getAllPharmacies();

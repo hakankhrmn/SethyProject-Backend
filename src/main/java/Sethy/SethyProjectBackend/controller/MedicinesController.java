@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/medicines")
+@RestController
 @CrossOrigin
+@RequestMapping("/medicines")
 public class MedicinesController {
 
     private final MedicineService medicineService;
@@ -26,7 +27,7 @@ public class MedicinesController {
         return new ResponseEntity<>(medicineDto, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<MedicineDto>> getAllMedicines(){
         List<MedicineDto> medicineDto = medicineService.getAllMedicines();
         return new ResponseEntity<>(medicineDto, HttpStatus.OK);
