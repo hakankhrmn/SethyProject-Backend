@@ -3,9 +3,13 @@ package Sethy.SethyProjectBackend.service;
 import Sethy.SethyProjectBackend.exception.NotFoundException;
 import Sethy.SethyProjectBackend.model.Pharmacist;
 import Sethy.SethyProjectBackend.model.dto.PharmacistDto;
+import Sethy.SethyProjectBackend.model.dto.PharmacistWithPharmacyDto;
 import Sethy.SethyProjectBackend.repository.PharmacistRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PharmacistServiceImpl implements PharmacistService {
@@ -27,6 +31,12 @@ public class PharmacistServiceImpl implements PharmacistService {
             throw new NotFoundException("COULD NOT FOUND THE PHARMACIST");
         }
         return modelMapper.map(pharmacist, PharmacistDto.class);
+    }
+
+    @Override
+    public List<PharmacistWithPharmacyDto> getAllPharmacists() {
+        List<Pharmacist> pharmacists = pharmacistRepository.findAll();
+        return pharmacists.stream().map(pharmacist -> modelMapper.map(pharmacist, PharmacistWithPharmacyDto.class)).collect(Collectors.toList());
     }
 
     @Override

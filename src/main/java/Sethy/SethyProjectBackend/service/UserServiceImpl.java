@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -75,7 +76,6 @@ public class UserServiceImpl implements UserService {
         newUser.setUserMail(pharmacistInputDto.getUserMail());
         newUser.setUserPassword(bcryptEncoder.encode(pharmacistInputDto.getUserPassword()));
         newUser.setUserRoles(roles);
-        //userRepository.save(newUser);
 
         Pharmacy newPharmacy = new Pharmacy();
         newPharmacy.setLocationLatitude(pharmacistInputDto.getLocationLatitude());
@@ -83,7 +83,6 @@ public class UserServiceImpl implements UserService {
         newPharmacy.setPharmacyName(pharmacistInputDto.getPharmacyName());
         newPharmacy.setPharmacyPhone(pharmacistInputDto.getPharmacyPhone());
 
-        //pharmacyRepository.save(newPharmacy);
 
         Pharmacist newPharmacist = new Pharmacist();
         newPharmacist.setUser(newUser);
@@ -91,9 +90,6 @@ public class UserServiceImpl implements UserService {
 
         newUser.setPharmacist(newPharmacist);
         newPharmacy.setPharmacyOwner(newPharmacist);
-        //pharmacistRepository.save(newPharmacist);
-
-
 
         return modelMapper.map(userRepository.save(newUser), UserWithPharmacistDto.class);
     }
@@ -124,6 +120,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserWithPharmacistDto> getAllUsers() {
+
+        List<User> users = userRepository.findAll();
+
+        return users.stream().map(user -> modelMapper.map(user, UserWithPharmacistDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
     public void updatePassword(User user, String newPassword) {
 
         String encodedPassword = bcryptEncoder.encode(newPassword);
@@ -131,6 +135,23 @@ public class UserServiceImpl implements UserService {
 
         user.setResetPasswordToken(null);
         userRepository.save(user);
+    }
+
+    @Override
+    public void deleteAllUsers() {
+
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            Set<Role> roles = user.getUserRoles();
+            if (roles.isEmpty()){
+                userRepository.delete(user);
+            }
+            for (Role role : roles) {
+                if (role.getRoleName().equals("PHARMACIST_USER")){
+                    userRepository.delete(user);
+                }
+            }
+        }
     }
 
 }
