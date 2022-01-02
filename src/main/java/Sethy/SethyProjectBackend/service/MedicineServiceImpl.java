@@ -55,7 +55,7 @@ public class MedicineServiceImpl implements MedicineService {
         }else{
             Medicine newMedicine = new Medicine();
             newMedicine.setMedicineName(medicineDto.getMedicineName());
-            newMedicine.setMedicineExpireDate(medicineDto.getMedicineExpireDate());
+            newMedicine.setMedicineImageUrl(medicineDto.getMedicineImageUrl());
             newMedicine.setMedicineDescription(medicineDto.getMedicineDescription());
             List<Pharmacy> pharmacies = new ArrayList<Pharmacy>();
             pharmacies.add(pharmacy);
