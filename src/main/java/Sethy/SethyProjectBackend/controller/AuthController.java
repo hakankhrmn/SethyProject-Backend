@@ -4,7 +4,7 @@ import Sethy.SethyProjectBackend.config.JwtTokenManager;
 import Sethy.SethyProjectBackend.model.AuthenticationRequest;
 import Sethy.SethyProjectBackend.model.AuthenticationResponse;
 import Sethy.SethyProjectBackend.model.dto.PharmacistInputDto;
-import Sethy.SethyProjectBackend.model.dto.UserDto;
+import Sethy.SethyProjectBackend.model.dto.UserWithPharmacistDto;
 import Sethy.SethyProjectBackend.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class AuthController {
         UserDetails userdetails = userService.loadUserByUsername(authenticationRequest.getUsername());
         String token = jwtTokenManager.generateToken(userdetails);
 
-        UserDto userDto = modelMapper.map(userService.getUserByUserMail(authenticationRequest.getUsername()), UserDto.class);
+        UserWithPharmacistDto userDto = modelMapper.map(userService.getUserByUserMail(authenticationRequest.getUsername()), UserWithPharmacistDto.class);
         return ResponseEntity.ok(new AuthenticationResponse(token,userDto));
 
     }
