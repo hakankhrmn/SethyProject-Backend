@@ -13,7 +13,7 @@ public class MedicineDto {
 
     private String medicineName;
 
-    private String medicineExpireDate;
+    private String medicineImageUrl;
 
     private String medicineDescription;
 

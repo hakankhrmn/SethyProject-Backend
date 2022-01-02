@@ -23,8 +23,8 @@ public class Medicine {
     @Column(name = "medicine_name")
     private String medicineName;
 
-    @Column(name = "medicine_expire_date")
-    private String medicineExpireDate;
+    @Column(name = "medicine_image_url")
+    private String medicineImageUrl;
 
     @Column(name = "medicine_Description")
     private String medicineDescription;

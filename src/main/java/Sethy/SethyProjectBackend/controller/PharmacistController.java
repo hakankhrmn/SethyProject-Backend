@@ -1,6 +1,6 @@
 package Sethy.SethyProjectBackend.controller;
 
-import Sethy.SethyProjectBackend.model.dto.PharmacistDto;
+import Sethy.SethyProjectBackend.model.dto.PharmacistWithPharmacyDto;
 import Sethy.SethyProjectBackend.service.PharmacistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +22,12 @@ public class PharmacistController {
     }
 
     @GetMapping("/pharmacist/{userMail}")
-    public ResponseEntity<PharmacistDto> getPharmacistByUserMail(@PathVariable String userMail){
+    public ResponseEntity<PharmacistWithPharmacyDto> getPharmacistByUserMail(@PathVariable String userMail){
         try {
-            PharmacistDto pharmacistDto = pharmacistService.getPharmacistByUser(userMail);
+            PharmacistWithPharmacyDto pharmacistDto = pharmacistService.getPharmacistByUser(userMail);
             return new ResponseEntity<>(pharmacistDto,HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>((PharmacistDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>((PharmacistWithPharmacyDto) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
