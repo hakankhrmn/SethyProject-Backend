@@ -39,7 +39,7 @@ public class Pharmacy {
     )
     private Pharmacist pharmacyOwner;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(
             name = "pharmacy_medicine",
             joinColumns = @JoinColumn(name = "pharmacy_id"),

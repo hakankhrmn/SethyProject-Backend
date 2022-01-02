@@ -29,7 +29,7 @@ public class Medicine {
     @Column(name = "medicine_Description")
     private String medicineDescription;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pharmacyMedicines")
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "pharmacyMedicines")
     private List<Pharmacy> medicinePharmacies;
 
 }
