@@ -1,7 +1,7 @@
 package Sethy.SethyProjectBackend.model;
 
 
-import Sethy.SethyProjectBackend.model.dto.UserWithPharmacistDto;
+import Sethy.SethyProjectBackend.model.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResponse {
     private String token;
-    private UserWithPharmacistDto userDto;
+    private UserDto userDto;
 }

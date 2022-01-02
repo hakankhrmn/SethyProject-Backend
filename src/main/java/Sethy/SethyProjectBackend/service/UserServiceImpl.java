@@ -6,6 +6,7 @@ import Sethy.SethyProjectBackend.model.Pharmacy;
 import Sethy.SethyProjectBackend.model.Role;
 import Sethy.SethyProjectBackend.model.User;
 import Sethy.SethyProjectBackend.model.dto.PharmacistInputDto;
+import Sethy.SethyProjectBackend.model.dto.UserDto;
 import Sethy.SethyProjectBackend.model.dto.UserWithPharmacistDto;
 import Sethy.SethyProjectBackend.repository.PharmacistRepository;
 import Sethy.SethyProjectBackend.repository.PharmacyRepository;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserWithPharmacistDto save(PharmacistInputDto pharmacistInputDto) {
+    public UserDto save(PharmacistInputDto pharmacistInputDto) {
 
         Role adminUser = roleService.getByRoleName("ADMIN_USER");
         Role pharmacistUser = roleService.getByRoleName("PHARMACIST_USER");
@@ -91,7 +92,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPharmacist(newPharmacist);
         newPharmacy.setPharmacyOwner(newPharmacist);
 
-        return modelMapper.map(userRepository.save(newUser), UserWithPharmacistDto.class);
+        return modelMapper.map(userRepository.save(newUser), UserDto.class);
     }
 
     @Override
