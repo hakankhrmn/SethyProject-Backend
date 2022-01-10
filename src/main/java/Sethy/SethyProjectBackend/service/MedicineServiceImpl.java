@@ -83,10 +83,15 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public void deleteMedicine(int medicineId) {
-        if (medicineRepository.findById(medicineId).isEmpty()){
+        Medicine medicine =medicineRepository.findById(medicineId).get();
+        if (medicine.equals(null)){
             throw new NotFoundException("COULD NOT FOUND THE MEDICINE");
         }
-        medicineRepository.findById(medicineId).get().getMedicinePharmacies().clear();
+        List<Pharmacy> pharmacies = medicineRepository.findById(medicineId).get().getMedicinePharmacies();
+
+        for (Pharmacy pharmacy:pharmacies) {
+            pharmacy.getPharmacyMedicines().remove(medicine);
+        }
         medicineRepository.deleteById(medicineId);
     }
 
