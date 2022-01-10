@@ -86,6 +86,7 @@ public class MedicineServiceImpl implements MedicineService {
         if (medicineRepository.findById(medicineId).isEmpty()){
             throw new NotFoundException("COULD NOT FOUND THE MEDICINE");
         }
+        medicineRepository.findById(medicineId).get().getMedicinePharmacies().clear();
         medicineRepository.deleteById(medicineId);
     }
 

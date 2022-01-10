@@ -40,6 +40,7 @@ public class PharmacyController {
             return new ResponseEntity<>((List<PharmacyDto>) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/medicine/{medicineId}")
     public ResponseEntity<List<PharmacyDto>> getMedicinePharmacies(@PathVariable int medicineId){
         try {
